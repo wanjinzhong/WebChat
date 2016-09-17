@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+input[type=text], input[type=password] {
+	border-radius: 5px;
+	height: 20px;
+	border: 1px solid #000;
+}
+
+input[type=text]:FOCUS, input[type=password]:FOCUS {
+	border-color: blue;
+	box-shadow: 5px 5px 20px rgba(50, 50, 50, 0.8);
+}
+
+input[type=submit], input[type=reset], input[type=button] {
+	width: 60px;
+	height: 30px;
+	margin-left: 10px;
+	color: white; background-color : #1E90FF;
+	border-radius: 5px;
+	border: 1px solid #1E90FF;
+	background-color: #1E90FF;
+}
