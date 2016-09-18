@@ -8,9 +8,10 @@
 <link rel="stylesheet" type="text/css" href="styles/login.css"/>
 <title>Web聊天室</title>
 </head>
+
 <body>
 	<div class="background" align="center">
-		<form action="" method="post">
+		<form action="LoginServlet" method="post">
 			<table align="center" id="loginTable">
 				<tr>
 					<td colspan="3" align="center">Web聊天室</td>
