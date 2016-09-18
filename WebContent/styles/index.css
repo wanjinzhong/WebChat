@@ -96,3 +96,9 @@ body {
 	left: 530px;
 	top: 50px;
 }
+.from{
+	color: red;
+}
+.to{
+	color: green;
+}

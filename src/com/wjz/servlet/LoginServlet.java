@@ -18,6 +18,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		String userName = request.getParameter("userNameIn");
@@ -25,10 +26,8 @@ public class LoginServlet extends HttpServlet {
 			out.print("<script type='text/javascript'>alert('请输入用户名');window.location = 'login.jsp';</script>");
 			return;
 		}
-		Users users = new Users();
-		if (users.addUser(userName)){
+		if (!Users.userMap.containsKey(userName)){
 			request.getSession().setAttribute("userName", userName);
-			System.out.println("servlet: " + userName);
 			response.sendRedirect("index.jsp");
 			return;
 		}
