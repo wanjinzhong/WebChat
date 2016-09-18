@@ -72,10 +72,17 @@ function nameHandle(jsonString) {
  *            包含来自用户，向用户，消息内容
  */
 function contentHandle(json) {
-	var html = "<span class='from'>" + json.from + "</span> 对 "
-			+ "<span class='to'>" + json.to + "</span> 说： "
-			+ "<span class='messageContent'>" + json.message + "</span><br/>";
+	var msgtype = json.msgtype;
 	var oldHtml = $(".chatroom").html();
+	if (msgtype == "normal") {
+		var html = "<span class='from'>" + json.from + "</span> (" +
+		json.time + ") :<br/>" + "<span class='getMessage'>" + json.message +
+		"</span><br/>";
+	}else if(msgtype == "system"){
+		var html = "<span class='from' style='color:red;'>[系统消息]</span> (" +
+		json.time + ") :<br/>" + "<span class='getMessage'>" + json.message +
+		"</span><br/>"
+	}
 	$(".chatroom").html(oldHtml + html);
 }
 /**

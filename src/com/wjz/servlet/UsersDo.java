@@ -1,5 +1,7 @@
 package com.wjz.servlet;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 import javax.websocket.EndpointConfig;
@@ -25,17 +27,20 @@ public class UsersDo {
 		myName = userName;
 		Users.userMap.put(userName, session);
 		broadCastName();
+		prepareMessage("system","all",myName + "上线啦！");
 	}
 
 	@OnMessage
 	public void onMessage(Session session, String message) {
-		prepareMessage("normal", "大家", message);
+		prepareMessage("normal", "all", message);
 	}
 
 	@OnClose
 	public void onClose(Session session) {
 		Users.userMap.remove(myName);
+		System.out.println("有人下线。。。");
 		broadCastName();
+		prepareMessage("system","all",myName + "下线了！");
 	}
 
 	@OnError
@@ -56,6 +61,7 @@ public class UsersDo {
 		if (users.length() > 0) {
 			users = users.substring(0, users.length() - 1);
 		}
+		System.out.println(users);
 		JSONObject json = new JSONObject();
 		json.put("type", "name");
 		json.put("content", users);
@@ -80,8 +86,13 @@ public class UsersDo {
 		content.put("from", myName);
 		content.put("message", message);
 		content.put("to", "大家");
-		content.put("msgtype", "nomal");
+		content.put("msgtype", msgtype);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date d = new Date();
+		String date = sdf.format(d);
+		content.put("time", date);
 		json.put("content", content);
+		System.out.println(json.toString());
 		sendMessageToAll(json);
 	}
 	/**
