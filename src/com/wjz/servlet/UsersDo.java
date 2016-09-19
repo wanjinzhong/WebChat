@@ -1,5 +1,6 @@
 package com.wjz.servlet;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
@@ -20,19 +21,23 @@ import com.wjz.dao.Users;
 @ServerEndpoint(value = "/UsersDo/{userName}")
 public class UsersDo {
 	private String myName = null;
-
+	public static final String NORMAL = "normal";
+	public static final String SYSTEM = "system";
 	@OnOpen
 	public void open(@PathParam("userName") String userName, Session session, EndpointConfig config) {
 
 		myName = userName;
 		Users.userMap.put(userName, session);
 		broadCastName();
-		prepareMessage("system","all",myName + "上线啦！");
+		prepareMessage(UsersDo.SYSTEM,"所有人",myName + "上线啦！");
 	}
 
 	@OnMessage
 	public void onMessage(Session session, String message) {
-		prepareMessage("normal", "all", message);
+		JSONObject json = new JSONObject(message);
+		String to = json.getString("to");
+		String content = json.getString("message");
+		prepareMessage(UsersDo.NORMAL, to, content);
 	}
 
 	@OnClose
@@ -65,8 +70,15 @@ public class UsersDo {
 		JSONObject json = new JSONObject();
 		json.put("type", "name");
 		json.put("content", users);
-		for (Session s : Users.userMap.values())
-			s.getAsyncRemote().sendText(json.toString());
+		for (Session s : Users.userMap.values()){
+			//s.getAsyncRemote().sendText(json.toString());
+			try {
+				s.getBasicRemote().sendText(json.toString());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -83,24 +95,53 @@ public class UsersDo {
 		JSONObject json = new JSONObject();
 		json.put("type", "content");
 		JSONObject content = new JSONObject();
-		content.put("from", myName);
 		content.put("message", message);
-		content.put("to", "大家");
 		content.put("msgtype", msgtype);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date d = new Date();
 		String date = sdf.format(d);
 		content.put("time", date);
+		content.put("from", myName);
+		if (msgtype.equals(UsersDo.NORMAL)){
+			content.put("to", to);
+		}else if (msgtype.equals(UsersDo.SYSTEM)){
+			content.put("number", Users.userMap.size());
+		}
 		json.put("content", content);
 		System.out.println(json.toString());
-		sendMessageToAll(json);
+		System.out.println("to: " + to);
+		if (to.equals("所有人")){
+			sendMessageToAll(json);
+		} else
+			sendMessageToOne(json, to);
 	}
 	/**
 	 * 发送消息到全体用户（广播）
 	 * @param json 封装好的消息体
 	 */
 	public void sendMessageToAll(JSONObject json) {
-		for (Session s : Users.userMap.values())
-			s.getAsyncRemote().sendText(json.toString());
+		for (Session s : Users.userMap.values()){
+			//s.getAsyncRemote().sendText(json.toString());
+			try {
+				s.getBasicRemote().sendText(json.toString());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * 发送消息到单个用户（单播）
+	 * @param json
+	 * @param to
+	 */
+	public void sendMessageToOne(JSONObject json, String to){
+		Session s = Users.userMap.get(to);
+		try {
+			s.getBasicRemote().sendText(json.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
