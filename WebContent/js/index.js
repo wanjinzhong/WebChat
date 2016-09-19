@@ -83,13 +83,13 @@ function contentHandle(json) {
 	if (msgtype == "normal") {
 		//如果是来自自己发送的消息
 		if(json.from == name){
-			var html = "<div style='margin-top: 10px;'><span class='from'>我</span> (" +
+			var html = "<div style='margin-top: 10px;'><span class='from'>我</span> " + "<span class='to'> 对" + json.to + "说</span> (" + 
 			json.time + ") :<br/>" + "<span class='getMessage'>" + message +
 			"</span></div>";
 		}
 		//如果来自别人发送的消息，且是单聊
 		else if(json.to == name){
-			var html = "<div style='margin-top: 10px;'><span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a><span class='toMe'> 对我说</span></span> (" +
+			var html = "<div style='margin-top: 10px;'><span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a><span class='to'> 对我说</span></span> (" +
 			json.time + ") :<br/>" + "<span class='getMessage'>" + message +
 			"</span></div>";
 		}
@@ -112,6 +112,7 @@ function contentHandle(json) {
 		$(".numOfFriend").text("总共" + json.number + "人");
 	}
 	$(".content").html(oldHtml + html);
+	$(".content").scrollTop($(".content")[0].scrollHeight);
 }
 /**
  * 发送消息

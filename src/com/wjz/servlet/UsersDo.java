@@ -136,9 +136,11 @@ public class UsersDo {
 	 * @param to
 	 */
 	public void sendMessageToOne(JSONObject json, String to){
-		Session s = Users.userMap.get(to);
+		Session sTo = Users.userMap.get(to);
+		Session sFrom = Users.userMap.get(myName);
 		try {
-			s.getBasicRemote().sendText(json.toString());
+			sTo.getBasicRemote().sendText(json.toString());
+			sFrom.getBasicRemote().sendText(json.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
