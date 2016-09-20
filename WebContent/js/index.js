@@ -18,7 +18,7 @@ function start() {
 	/**
 	 * 建立连接
 	 */
-	ws = new WebSocket("ws://localhost:8080/WebChat/UsersDo/" + name);
+	ws = new WebSocket("ws://192.168.2.108:8080/WebChat/UsersDo/" + name);
 	/**
 	 * 已经建立好连接
 	 * 
@@ -83,35 +83,36 @@ function contentHandle(json) {
 	if (msgtype == "normal") {
 		//如果是来自自己发送的消息
 		if(json.from == name){
-			var html = "<div style='margin-top: 10px;'><span class='from'>我</span> (" +
-			json.time + ") :<br/>" + "<span class='getMessage'>" + message +
-			"</span></div>";
+			var html = "<div class='messageDiv'><div class='fromMe'><span class='from'>我</span> (" +
+			json.time + ") <div>" + "<div class='getMessage msgfromMe'><span style='float:left;text-align:left;'>" + message +
+			"<span></div></div>";
 		}
 		//如果来自别人发送的消息，且是单聊
 		else if(json.to == name){
-			var html = "<div style='margin-top: 10px;'><span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a><span class='toMe'> 对我说</span></span> (" +
-			json.time + ") :<br/>" + "<span class='getMessage'>" + message +
-			"</span></div>";
+			var html = "<div class='messageDiv'<span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a><span class='toMe'> 对我说</span></span> (" +
+			json.time + ") <br/>" + "<div class='getMessage'>" + message +
+			"</div></div>";
 		}
 		//如果来自别人发送的消息，且不是单聊
 		else{
-			var html = "<div style='margin-top: 10px;'><span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a></span> (" +
-			json.time + ") :<br/>" + "<span class='getMessage'>" + message +
+			var html = "<div class='messageDiv'><span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a></span> (" +
+			json.time + ") <br/>" + "<div class='getMessage'>" + message +
 			"</span></div>";
 		}
 	}else if(msgtype == "system"){
 		if (json.from == name){
-			var html = "<div style='margin-top: 10px;'><span class='from' style='color:red;'>[系统消息]</span> (" +
-			json.time + ") :<br/>" + "<span class='getMessage'>欢迎进入聊天室，请注意文明用语</span></div>";
+			var html = "<div class='messageDiv'><span class='from' style='color:red;'>[系统消息]</span> (" +
+			json.time + ") <br/>" + "<div class='getMessage'>欢迎进入聊天室，请注意文明用语</div></div>";
 		}
 		else {
-			var html = "<div style='margin-top: 10px;'><span class='from' style='color:red;'>[系统消息]</span> (" +
-			json.time + ") :<br/>" + "<span class='getMessage'>" + json.message +
-			"</span></div>";
+			var html = "<div class='messageDiv'><span class='from' style='color:red;'>[系统消息]</span> (" +
+			json.time + ") <br/>" + "<div class='getMessage'>" + json.message +
+			"</div></div>";
 		}
 		$(".numOfFriend").text("总共" + json.number + "人");
 	}
 	$(".content").html(oldHtml + html);
+	$(".content").scrollTop($(".content")[0].scrollHeight);
 }
 /**
  * 发送消息

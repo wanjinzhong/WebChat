@@ -92,12 +92,13 @@ public class UsersDo {
 	 *            发送的消息正文
 	 */
 	public void prepareMessage(String msgtype, String to, String message) {
+		message = fomatTag(message);
 		JSONObject json = new JSONObject();
 		json.put("type", "content");
 		JSONObject content = new JSONObject();
 		content.put("message", message);
 		content.put("msgtype", msgtype);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		Date d = new Date();
 		String date = sdf.format(d);
 		content.put("time", date);
@@ -136,12 +137,26 @@ public class UsersDo {
 	 * @param to
 	 */
 	public void sendMessageToOne(JSONObject json, String to){
-		Session s = Users.userMap.get(to);
+		Session toSession = Users.userMap.get(to);
+		Session fromSession = Users.userMap.get(myName);
 		try {
-			s.getBasicRemote().sendText(json.toString());
+			toSession.getBasicRemote().sendText(json.toString());
+			fromSession.getBasicRemote().sendText(json.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 格式化消息内容。屏蔽html标签
+	 * @param content 消息未格式化的内容
+	 * @return 格式化后的内容
+	 */
+	public String fomatTag(String content){
+		content = content.replace("&", "&amp")
+				.replace("<", "&lt")
+				.replace(">", "&gt");
+		return content;
 	}
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +45,9 @@
 			</div>
 			<input type="button" class="sendBtn" value="发送" onclick="send()">
 		</div>
-		<div class="emoj"></div>
+		<div class="emoj">
+			
+		</div>
 	</div>
 </body>
 <script type="text/javascript">
@@ -56,7 +59,7 @@
 	 * 窗口大小改变事件，页面自适应
 	 */
 	 window.onresize =resize;
-	function resize () {
+	 function resize () {
 		var windowHeight = window.innerHeight;
 		var windowWidth = window.innerWidth;
 		var containerHeight = document.getElementById("container").offsetHeight;

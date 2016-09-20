@@ -98,6 +98,7 @@ body {
 
 .from {
 	color: blue;
+	text-align: left;
 }
 
 .toMe {
@@ -131,6 +132,7 @@ ul {
 }
 
 .aboutFriend {
+	margin-top: 5px;
 	height: 10%;
 	min-height: 45px;
 }
@@ -138,4 +140,31 @@ ul {
 .content {
 	margin-left: 10px;
 	overflow: scroll;
+}
+
+.getMessage {
+	margin-top: 5px;
+	padding: 5px; border-radius : 8px;
+	border: solid 2px #b0e2ff;
+	border-bottom-color: #4f9ecd;
+	border-right-color: #4f9ecd; float : left;
+	background-color: #b0e2ff;
+	float: left;
+	border-radius: 8px;
+}
+
+.msgfromMe {
+	margin-right: 20px;
+	float: right;
+}
+
+.fromMe {
+	width: 100%;
+	text-align: right;
+}
+
+.messageDiv {
+	text-align: left;
+	padding-top: 10px;
+	clear: both;
 }
