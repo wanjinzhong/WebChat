@@ -90,11 +90,9 @@ public class UsersDo {
 		json.put("type", "name");
 		json.put("content", users);
 		for (Session s : Users.userMap.values()) {
-			// s.getAsyncRemote().sendText(json.toString());
 			try {
 				s.getBasicRemote().sendText(json.toString());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
