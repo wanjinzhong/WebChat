@@ -40,13 +40,17 @@
 			<div class="atDiv">
 				@ <input type="text" class="at" disabled="disabled" value="所有人">
 			</div>
+			<div class="noHtmlDiv"><input type="checkbox" name="noHtml" class="noHtml"/>屏蔽HTML代码</div>
 			<div class="inputDiv">
 				<textarea rows="5" cols="10" class="message" id="message"></textarea>
 			</div>
 			<input type="button" class="sendBtn" value="发送" onclick="send()">
 		</div>
 		<div class="emoj">
-			
+			<c:forEach begin="1" end="80" varStatus="index">
+				<img alt="${index.count }" src="expression/${index.count }.gif" onclick="chooseExp('${index.count}')">
+				<c:if test="${index.count % 20 == 0 }"><br/></c:if>
+			</c:forEach>
 		</div>
 	</div>
 </body>

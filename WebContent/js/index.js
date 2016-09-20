@@ -122,7 +122,8 @@ function send() {
 	if (message == "")
 		return;
 	var to = $(".at").val();
-	var json = {"to":to,"message": message};
+	var noHtml = $(".noHtml").get(0).checked;
+	var json = {"to":to,"noHtml":noHtml,"message": message};
 	var jsonMessage = JSON.stringify(json);
 	console.log(jsonMessage);
 	// 使用WebSocket发送消息
@@ -135,4 +136,11 @@ function send() {
  */
 function atSomeOne(atName){
 	$(".at").val($(atName).text());
+}
+/**
+ * 选择表情
+ * @param index 表情代号
+ */
+function chooseExp(index){
+	$("#message").val($("#message").val() + "[" + index + "]");
 }

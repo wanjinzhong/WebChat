@@ -83,8 +83,11 @@ body {
 }
 
 .emoj {
-	width: 250px;
+	position: absolute;
+	width: 600px;
 	height: 100px;
+	left: 650px;
+	top: 10px;
 }
 
 .sendBtn {
@@ -167,4 +170,10 @@ ul {
 	text-align: left;
 	padding-top: 10px;
 	clear: both;
+}
+
+.noHtmlDiv{
+	position: absolute;
+	left: 200px;
+	top: 15px;
 }

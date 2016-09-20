@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
@@ -17,35 +19,52 @@ import javax.websocket.server.ServerEndpoint;
 import org.json.JSONObject;
 
 import com.wjz.dao.Users;
+import com.wjz.util.MessageUtil;
 
 @ServerEndpoint(value = "/UsersDo/{userName}")
 public class UsersDo {
 	private String myName = null;
 	public static final String NORMAL = "normal";
 	public static final String SYSTEM = "system";
+	/**
+	 * WebSocket连接
+	 * @param userName 用户名
+	 * @param session 该用户的一个会话
+	 * @param config 配置
+	 */
 	@OnOpen
 	public void open(@PathParam("userName") String userName, Session session, EndpointConfig config) {
 
 		myName = userName;
 		Users.userMap.put(userName, session);
 		broadCastName();
-		prepareMessage(UsersDo.SYSTEM,"所有人",myName + "上线啦！");
+		prepareMessage(UsersDo.SYSTEM, "所有人", false, myName + "上线啦！");
 	}
-
+	
+	/**
+	 * 收到用户发来和消息
+	 * @param session 该用户的一个会话
+	 * @param config 配置
+	 */
 	@OnMessage
 	public void onMessage(Session session, String message) {
 		JSONObject json = new JSONObject(message);
 		String to = json.getString("to");
+		boolean noHtml = json.getBoolean("noHtml");
 		String content = json.getString("message");
-		prepareMessage(UsersDo.NORMAL, to, content);
+		prepareMessage(UsersDo.NORMAL, to, noHtml, content);
 	}
 
+	/**
+	 * 用户下线
+	 * @param session 该用户的一个会话
+	 */
 	@OnClose
 	public void onClose(Session session) {
 		Users.userMap.remove(myName);
 		System.out.println("有人下线。。。");
 		broadCastName();
-		prepareMessage("system","所有人",myName + "下线了！");
+		prepareMessage("system", "所有人", false, myName + "下线了！");
 	}
 
 	@OnError
@@ -70,8 +89,8 @@ public class UsersDo {
 		JSONObject json = new JSONObject();
 		json.put("type", "name");
 		json.put("content", users);
-		for (Session s : Users.userMap.values()){
-			//s.getAsyncRemote().sendText(json.toString());
+		for (Session s : Users.userMap.values()) {
+			// s.getAsyncRemote().sendText(json.toString());
 			try {
 				s.getBasicRemote().sendText(json.toString());
 			} catch (IOException e) {
@@ -91,8 +110,11 @@ public class UsersDo {
 	 * @param message
 	 *            发送的消息正文
 	 */
-	public void prepareMessage(String msgtype, String to, String message) {
-		message = fomatTag(message);
+	public void prepareMessage(String msgtype, String to, boolean noHtml, String message) {
+		if (noHtml) {
+			message = MessageUtil.fomatTag(message);
+		}
+		message = MessageUtil.formatFace(message);
 		JSONObject json = new JSONObject();
 		json.put("type", "content");
 		JSONObject content = new JSONObject();
@@ -103,26 +125,29 @@ public class UsersDo {
 		String date = sdf.format(d);
 		content.put("time", date);
 		content.put("from", myName);
-		if (msgtype.equals(UsersDo.NORMAL)){
+		if (msgtype.equals(UsersDo.NORMAL)) {
 			content.put("to", to);
-		}else if (msgtype.equals(UsersDo.SYSTEM)){
+		} else if (msgtype.equals(UsersDo.SYSTEM)) {
 			content.put("number", Users.userMap.size());
 		}
 		json.put("content", content);
 		System.out.println(json.toString());
 		System.out.println("to: " + to);
-		if (to.equals("所有人")){
+		if (to.equals("所有人")) {
 			sendMessageToAll(json);
 		} else
 			sendMessageToOne(json, to);
 	}
+
 	/**
 	 * 发送消息到全体用户（广播）
-	 * @param json 封装好的消息体
+	 * 
+	 * @param json
+	 *            封装好的消息体
 	 */
 	public void sendMessageToAll(JSONObject json) {
-		for (Session s : Users.userMap.values()){
-			//s.getAsyncRemote().sendText(json.toString());
+		for (Session s : Users.userMap.values()) {
+			// s.getAsyncRemote().sendText(json.toString());
 			try {
 				s.getBasicRemote().sendText(json.toString());
 			} catch (IOException e) {
@@ -131,12 +156,14 @@ public class UsersDo {
 			}
 		}
 	}
+
 	/**
 	 * 发送消息到单个用户（单播）
+	 * 
 	 * @param json
 	 * @param to
 	 */
-	public void sendMessageToOne(JSONObject json, String to){
+	public void sendMessageToOne(JSONObject json, String to) {
 		Session toSession = Users.userMap.get(to);
 		Session fromSession = Users.userMap.get(myName);
 		try {
@@ -147,16 +174,6 @@ public class UsersDo {
 			e.printStackTrace();
 		}
 	}
+
 	
-	/**
-	 * 格式化消息内容。屏蔽html标签
-	 * @param content 消息未格式化的内容
-	 * @return 格式化后的内容
-	 */
-	public String fomatTag(String content){
-		content = content.replace("&", "&amp")
-				.replace("<", "&lt")
-				.replace(">", "&gt");
-		return content;
-	}
 }
