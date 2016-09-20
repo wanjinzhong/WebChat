@@ -13,7 +13,6 @@
 <body>
 	<!-- 宽：1024px，高：768px -->
 	<div class="header">
-		<span class="title">这！是！W！E！B！聊！天！室！</span>
 		<span class="dispName">我是${userName }</span>
 	</div>
 	<div class="container" id="container">
@@ -45,15 +44,12 @@
 			</div>
 			<input type="button" class="sendBtn" value="发送" onclick="send()">
 		</div>
-		<div class="emoji">
-			
-		</div>
+		<div class="emoj"></div>
 	</div>
 </body>
 <script type="text/javascript">
 	
-	<%-- var name = '<%=request.getSession().getAttribute("userName")%>'; --%>
-	var name = "${userName }";
+	var name = '<%=request.getSession().getAttribute("userName")%>';
 	start();
 	resize();
 	/**

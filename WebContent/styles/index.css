@@ -16,11 +16,7 @@ body {
 	background-color: #87ceeb;
 	width: 100%;
 }
-.title{
-	position: absolute;
-	font-size: 40px;
-	bottom: 5px;
-}
+
 .footer {
 	position: fixed;
 	left: 0;
@@ -86,7 +82,7 @@ body {
 	height: 80px;
 }
 
-.emoji {
+.emoj {
 	width: 250px;
 	height: 100px;
 }
@@ -104,7 +100,7 @@ body {
 	color: blue;
 }
 
-.to {
+.toMe {
 	color: green;
 }
 

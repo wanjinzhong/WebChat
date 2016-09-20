@@ -45,7 +45,7 @@ public class UsersDo {
 		Users.userMap.remove(myName);
 		System.out.println("有人下线。。。");
 		broadCastName();
-		prepareMessage("system","all",myName + "下线了！");
+		prepareMessage("system","所有人",myName + "下线了！");
 	}
 
 	@OnError
@@ -136,11 +136,9 @@ public class UsersDo {
 	 * @param to
 	 */
 	public void sendMessageToOne(JSONObject json, String to){
-		Session sTo = Users.userMap.get(to);
-		Session sFrom = Users.userMap.get(myName);
+		Session s = Users.userMap.get(to);
 		try {
-			sTo.getBasicRemote().sendText(json.toString());
-			sFrom.getBasicRemote().sendText(json.toString());
+			s.getBasicRemote().sendText(json.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
