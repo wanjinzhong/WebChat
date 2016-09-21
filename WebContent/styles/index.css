@@ -37,7 +37,7 @@ body {
 
 .friendList {
 	position: absolute;
-	width: 250px;
+	width: 200px;
 	height: 100%;
 	border-radius: 20px;
 	border: 3px solid #000;
@@ -46,7 +46,7 @@ body {
 
 .chatroom {
 	position: absolute;
-	left: 253px;
+	left: 203px;
 	padding: 20px;
 	border-radius: 20px;
 	border: 3px solid #000;
@@ -73,6 +73,10 @@ body {
 	width: 500px;
 }
 
+.at {
+	width: 100px;
+}
+
 .message {
 	position: absolute;
 	top: 50px;
@@ -85,9 +89,14 @@ body {
 .emoj {
 	position: absolute;
 	width: 600px;
-	height: 100px;
-	left: 650px;
-	top: 10px;
+	height: 220px;
+	left: 10px;
+	bottom: 160px;
+	background-color: #d6f7ff;
+	border-radius: 8px;
+	border: solid 2px #b0e2ff;
+	border-bottom-color: #4f9ecd;
+	border-right-color: #4f9ecd;
 }
 
 .sendBtn {
@@ -146,24 +155,44 @@ ul {
 }
 
 .getMessage {
+	text-align: left;
+	max-width: 93%;
 	margin-top: 5px;
-	padding: 5px; border-radius : 8px;
+	padding: 5px;
+	border-radius: 8px;
 	border: solid 2px #b0e2ff;
 	border-bottom-color: #4f9ecd;
-	border-right-color: #4f9ecd; float : left;
-	background-color: #b0e2ff;
+	border-right-color: #4f9ecd;
 	float: left;
-	border-radius: 8px;
+	background-color: #b0e2ff;
 }
 
 .msgfromMe {
-	margin-right: 20px;
 	float: right;
+	text-align: left;
+	max-width: 100%;
+	margin-top: 5px;
+	padding: 5px;
+	border-radius: 8px;
+	border: solid 2px #b0e2ff;
+	border-bottom-color: #4f9ecd;
+	border-right-color: #4f9ecd;
+	background-color: #b0e2ff;
+	border-radius: 8px;
 }
 
 .fromMe {
-	width: 100%;
+	width: 92%;
 	text-align: right;
+	float: right;
+	margin-right: 10px;
+}
+
+.messageContent {
+	float: left;
+	text-align: left;
+	width: 100%;
+	word-wrap: break-word;
 }
 
 .messageDiv {
@@ -172,8 +201,18 @@ ul {
 	clear: both;
 }
 
-.noHtmlDiv{
+.operate {
 	position: absolute;
-	left: 200px;
+	left: 150px;
 	top: 15px;
+}
+
+.emojiPic {
+	width: 24px;
+	height: 24px;
+	border: solid 1px #d6f7ff;
+	border-radius: 3px;
+}
+.emojiPic:HOVER{
+	border-color: #204a87;
 }

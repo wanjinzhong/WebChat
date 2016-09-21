@@ -84,20 +84,20 @@ function contentHandle(json) {
 		//如果是来自自己发送的消息
 		if(json.from == name){
 			var html = "<div class='messageDiv'><div class='fromMe'><span class='from'>我</span> (" +
-			json.time + ") <div>" + "<div class='getMessage msgfromMe'><span style='float:left;text-align:left;'>" + message +
+			json.time + ") <div>" + "<div class='msgfromMe'><span class='messageContent'>" + message +
 			"<span></div></div>";
 		}
 		//如果来自别人发送的消息，且是单聊
 		else if(json.to == name){
 			var html = "<div class='messageDiv'<span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a><span class='toMe'> 对我说</span></span> (" +
-			json.time + ") <br/>" + "<div class='getMessage'>" + message +
-			"</div></div>";
+			json.time + ") <br/>" + "<div class='getMessage'><span class='messageContent'>" + message +
+			"</span></div></div>";
 		}
 		//如果来自别人发送的消息，且不是单聊
 		else{
 			var html = "<div class='messageDiv'><span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a></span> (" +
-			json.time + ") <br/>" + "<div class='getMessage'>" + message +
-			"</span></div>";
+			json.time + ") <br/>" + "<div class='getMessage'><span class='messageContent'>" + message +
+			"</span></span></div>";
 		}
 	}else if(msgtype == "system"){
 		if (json.from == name){
@@ -138,9 +138,24 @@ function atSomeOne(atName){
 	$(".at").val($(atName).text());
 }
 /**
+ * 显示或隐藏表情Div
+ */
+function emojiDiv(){
+	if($(".emoj").css("display") == "none")
+		$(".emoj").css("display", "block");
+	else $(".emoj").css("display", "none");
+}
+/**
  * 选择表情
  * @param index 表情代号
  */
 function chooseExp(index){
 	$("#message").val($("#message").val() + "[" + index + "]");
+	emojiDiv();
+}
+/**
+ * 输入框点击时表情列表消失
+ */
+function inputClick(){
+	$(".emoj").css("display", "none");
 }

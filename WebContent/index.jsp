@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,44 +40,57 @@
 			<div class="atDiv">
 				@ <input type="text" class="at" disabled="disabled" value="所有人">
 			</div>
-			<div class="noHtmlDiv"><input type="checkbox" name="noHtml" class="noHtml"/>屏蔽HTML代码</div>
+			<div class="operate">
+				<input type="checkbox" name="noHtml" class="noHtml" />屏蔽HTML代码 <a
+					href="javascript:void(0);" onclick="emojiDiv()">表情</a>
+			</div>
 			<div class="inputDiv">
-				<textarea rows="5" cols="10" class="message" id="message"></textarea>
+				<textarea rows="5" cols="10" class="message" id="message" onclick="inputClick()"></textarea>
 			</div>
 			<input type="button" class="sendBtn" value="发送" onclick="send()">
 		</div>
-		<div class="emoj">
-			<c:forEach begin="1" end="80" varStatus="index">
-				<img alt="${index.count }" src="expression/${index.count }.gif" onclick="chooseExp('${index.count}')">
-				<c:if test="${index.count % 20 == 0 }"><br/></c:if>
-			</c:forEach>
-		</div>
+
+	</div>
+	<div class="emoj" style="display: none;">
+		<c:forEach begin="1" end="132" varStatus="index">
+			<img alt="${index.count }" src="expression/${index.count }.gif"
+				onclick="chooseExp('${index.count}')"  class="emojiPic"/>
+			<c:if test="${index.count % 20 == 0 }">
+				<br />
+			</c:if>
+		</c:forEach>
 	</div>
 </body>
 <script type="text/javascript">
 	
 	var name = '<%=request.getSession().getAttribute("userName")%>';
+	var emojiDisplayed = false;
 	start();
 	resize();
 	/**
 	 * 窗口大小改变事件，页面自适应
 	 */
-	 window.onresize =resize;
-	 function resize () {
+	window.onresize = resize;
+	function resize() {
 		var windowHeight = window.innerHeight;
 		var windowWidth = window.innerWidth;
 		var containerHeight = document.getElementById("container").offsetHeight;
 		var containerWidth = document.getElementById("container").offsetWidth;
 		console.log(containerHeight);
-		if (containerHeight - 50 > 0){
-			document.getElementById("list").style.height = containerHeight - 60 + "px";
-			document.getElementById("chatroom").style.height = containerHeight - 40 + "px";
-			
+		if (containerHeight - 50 > 0) {
+			document.getElementById("list").style.height = containerHeight - 60
+					+ "px";
+			document.getElementById("chatroom").style.height = containerHeight
+					- 40 + "px";
+
 		}
-		if (containerWidth - 253 > 0){
-			document.getElementById("chatroom").style.width = containerWidth - 298 + "px";
-			document.getElementById("content").style.width = containerWidth - 298 + "px";
-			document.getElementById("content").style.height = containerHeight - 30 + "px";
+		if (containerWidth - 203 > 0) {
+			document.getElementById("chatroom").style.width = containerWidth
+					- 248 + "px";
+			document.getElementById("content").style.width = containerWidth
+					- 248 + "px";
+			document.getElementById("content").style.height = containerHeight
+					- 30 + "px";
 		}
 	}
 </script>
