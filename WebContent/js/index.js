@@ -18,7 +18,7 @@ function start() {
 	/**
 	 * 建立连接
 	 */
-	ws = new WebSocket("ws://192.168.2.108:8080/WebChat/UsersDo/" + name);
+	ws = new WebSocket("ws://localhost:8080/WebChat/UsersDo/" + name);
 	/**
 	 * 已经建立好连接
 	 * 

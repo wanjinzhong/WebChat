@@ -36,7 +36,7 @@ public class MessageUtil {
 			if (content.charAt(i) == ']') {
 				end = i;
 				//只有当“[”在“]”之前才有效
-				if (start < end) {
+				if (start+1 < end) {
 					//利用正则表达式判断“[”的“]”之间是否是数字
 					Pattern pattern = Pattern.compile("[0-9]*");
 					Matcher isNum = pattern.matcher(content.substring(start + 1, end));

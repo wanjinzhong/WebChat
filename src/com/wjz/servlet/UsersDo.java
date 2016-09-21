@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import com.wjz.dao.Users;
 import com.wjz.util.MessageUtil;
+import com.wjz.util.SensitiveWord;
 
 @ServerEndpoint(value = "/UsersDo/{userName}")
 public class UsersDo {
@@ -112,6 +113,7 @@ public class UsersDo {
 		if (noHtml) {
 			message = MessageUtil.fomatTag(message);
 		}
+		message = SensitiveWord.formatWord(message);
 		message = MessageUtil.formatFace(message);
 		JSONObject json = new JSONObject();
 		json.put("type", "content");
