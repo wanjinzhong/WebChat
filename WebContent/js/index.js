@@ -92,12 +92,16 @@ function contentHandle(json) {
 			var html = "<div class='messageDiv'<span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a><span class='toMe'> 对我说</span></span> (" +
 			json.time + ") <br/>" + "<div class='getMessage'><span class='messageContent'>" + message +
 			"</span></div></div>";
+			document.getElementById("msgAudio").src="audio/saytome.mp3";
+			document.getElementById("msgAudio").play();
 		}
 		//如果来自别人发送的消息，且不是单聊
 		else{
 			var html = "<div class='messageDiv'><span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a></span> (" +
 			json.time + ") <br/>" + "<div class='getMessage'><span class='messageContent'>" + message +
 			"</span></span></div>";
+			document.getElementById("msgAudio").src="audio/messagein.mp3";
+			document.getElementById("msgAudio").play();
 		}
 	}else if(msgtype == "system"){
 		if (json.from == name){
@@ -108,6 +112,8 @@ function contentHandle(json) {
 			var html = "<div class='messageDiv'><span class='from' style='color:red;'>[系统消息]</span> (" +
 			json.time + ") <br/>" + "<div class='getMessage'>" + json.message +
 			"</div></div>";
+			document.getElementById("msgAudio").src="audio/online.mp3";
+			document.getElementById("msgAudio").play();
 		}
 		$(".numOfFriend").text("总共" + json.number + "人");
 	}
@@ -118,7 +124,7 @@ function contentHandle(json) {
  * 发送消息
  */
 function send() {
-	var message = $("#message").val();
+	var message = $("#message").html();
 	if (message == "")
 		return;
 	var to = $(".at").val();
@@ -128,7 +134,7 @@ function send() {
 	console.log(jsonMessage);
 	// 使用WebSocket发送消息
 	ws.send(jsonMessage);
-	$(".message").val("");
+	$("#message").html("");
 }
 /**
  * at某人，将其名字填入at文本框中
@@ -150,7 +156,8 @@ function emojiDiv(){
  * @param index 表情代号
  */
 function chooseExp(index){
-	$("#message").val($("#message").val() + "[" + index + "]");
+	var pic = "<img src='expression/" + index + ".gif'/>"
+	$("#message").html($("#message").html() + pic);
 	emojiDiv();
 }
 /**

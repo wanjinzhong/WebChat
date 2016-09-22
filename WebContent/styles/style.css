@@ -5,13 +5,13 @@
 	padding: 0;
 }
 
-input[type=text], input[type=password], textArea {
+input[type=text], input[type=password], .message {
 	border-radius: 5px;
 	height: 20px;
 	border: 1px solid #000;
 }
 
-input[type=text]:FOCUS, input[type=password]:FOCUS, textArea:FOCUS {
+input[type=text]:FOCUS, input[type=password]:FOCUS, .message:FOCUS {
 	border-color: blue;
 	box-shadow: 5px 5px 20px rgba(50, 50, 50, 0.8);
 }

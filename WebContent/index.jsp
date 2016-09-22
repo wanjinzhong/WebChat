@@ -45,7 +45,7 @@
 					href="javascript:void(0);" onclick="emojiDiv()">表情</a>
 			</div>
 			<div class="inputDiv">
-				<textarea rows="5" cols="10" class="message" id="message" onclick="inputClick()"></textarea>
+				<div rows="5" cols="10" class="message" id="message" onclick="inputClick()" contenteditable="true"></div>
 			</div>
 			<input type="button" class="sendBtn" value="发送" onclick="send()">
 		</div>
@@ -54,12 +54,13 @@
 	<div class="emoj" style="display: none;">
 		<c:forEach begin="1" end="132" varStatus="index">
 			<img alt="${index.count }" src="expression/${index.count }.gif"
-				onclick="chooseExp('${index.count}')"  class="emojiPic"/>
+				onclick="chooseExp('${index.count }')"  class="emojiPic"/>
 			<c:if test="${index.count % 20 == 0 }">
 				<br />
 			</c:if>
 		</c:forEach>
 	</div>
+	<audio  id="msgAudio"></audio>
 </body>
 <script type="text/javascript">
 	

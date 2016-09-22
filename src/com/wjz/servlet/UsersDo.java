@@ -110,7 +110,7 @@ public class UsersDo {
 	 *            发送的消息正文
 	 */
 	public void prepareMessage(String msgtype, String to, boolean noHtml, String message) {
-		if (noHtml) {
+		if (!noHtml) {
 			message = MessageUtil.fomatTag(message);
 		}
 		message = SensitiveWord.formatWord(message);

@@ -84,6 +84,13 @@ body {
 	width: 500px;
 	min-width: 500px;
 	height: 80px;
+	background-color: white;
+	border-radius: 8px;
+	border: solid 2px #b0e2ff;
+	border-bottom-color: #4f9ecd;
+	border-right-color: #4f9ecd;
+	overflow: auto;
+	word-wrap: break-word;
 }
 
 .emoj {

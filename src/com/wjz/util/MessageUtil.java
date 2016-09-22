@@ -5,14 +5,14 @@ import java.util.regex.Pattern;
 
 public class MessageUtil {
 	/**
-	 * 格式化消息内容。屏蔽html标签
+	 * 格式化消息内容。启用html标签
 	 * 
 	 * @param content
 	 *            消息未格式化的内容
 	 * @return 格式化后的内容
 	 */
 	public static String fomatTag(String content) {
-		content = content.replace("&", "&amp").replace("<", "&lt").replace(">", "&gt");
+		content = content.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">");
 		return content;
 	}
 
