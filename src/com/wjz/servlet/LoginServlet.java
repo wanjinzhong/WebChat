@@ -25,6 +25,10 @@ public class LoginServlet extends HttpServlet {
 			out.print("<script type='text/javascript'>alert('请输入用户名');window.location = 'login.jsp';</script>");
 			return;
 		}
+		if (userName.equals("所有人")){
+			out.print("<script type='text/javascript'>alert('不能取名字为“所有人”');window.location = 'login.jsp';</script>");
+			return;
+		}
 		if (userName.indexOf('@') != -1) {
 			out.print("<script type='text/javascript'>alert('不能包含非法字符“@”');window.location = 'login.jsp';</script>");
 			return;

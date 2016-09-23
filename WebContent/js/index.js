@@ -207,9 +207,18 @@ function inputClick() {
 	$(".emoj").css("display", "none");
 	$(".backgourd").css("display", "none");
 }
+
+/**
+ * 清空屏幕
+ */
 function clearScreen() {
 	$(".content").text("");
 }
+
+/**
+ * 设置背景图片
+ * @param index
+ */
 function setBackImg(index) {
 	$(".chatroom").css("background-image", "url('backimg/" + index + ".jpg')");
 	$(".friendList")
