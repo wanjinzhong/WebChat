@@ -18,7 +18,7 @@ function start() {
 	/**
 	 * 建立连接
 	 */
-	ws = new WebSocket("ws://localhost:8080/WebChat/UsersDo/" + name);
+	ws = new WebSocket("ws:http://www.wanjinzhong.cn:8080/webchat/UsersDo/" + name);
 	/**
 	 * 已经建立好连接
 	 * 
@@ -99,7 +99,7 @@ function contentHandle(json) {
 		}
 		//如果来自别人发送的消息，且不是单聊
 		else{
-			var html = "<div class='messageDiv'><span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a></span> (" +
+			var html = "<div class='messageDiv'><span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a><span class='toMe'> 对所有人说</span></span> (" +
 			json.time + ") <br/>" + "<div class='getMessage'><span class='messageContent'>" + message +
 			"</span></span></div>";
 			if(msgtype != "record"){

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,15 +43,16 @@ public class SQLUtil {
 	public static boolean storeMessageFormMe(List<Message> messages) {
 		connect();
 		try {
-			String sql = "insert into messages values(?,?,?,?)";
+			String sql = "insert into messages(`from`, `to`, `message`, `time`) values(?,?,?,?)";
 			PreparedStatement ps;
 			for (Message msg : messages) {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, msg.getFrom());
 				ps.setString(2, msg.getTo());
 				ps.setString(3, msg.getMessage());
-				java.sql.Date time = new java.sql.Date(msg.getTime().getTime());
-				ps.setDate(4, time);
+				System.out.println(msg.getTime().toString());
+				Timestamp time = new Timestamp(msg.getTime().getTime());
+				ps.setTimestamp(4, time);
 				ps.execute();
 			}
 			return true;
@@ -68,17 +70,17 @@ public class SQLUtil {
 		List<Message> message = new ArrayList<Message>();
 		connect();
 		try {
-			String sql = "select * from messages where `from`=? or `to`=?";
+			String sql = "select * from messages where `from`=? or `to`=? or `to`='所有人' order by `time`";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, userName);
 			ps.setString(2, userName);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				Message msg = new Message();
-				msg.setFrom(rs.getString(1));
-				msg.setTo(rs.getString(2));
-				msg.setMessage(rs.getString(3));
-				msg.setTime(rs.getDate(4));
+				msg.setFrom(rs.getString("from"));
+				msg.setTo(rs.getString("to"));
+				msg.setMessage(rs.getString("message"));
+				msg.setTime(rs.getTimestamp("time"));
 				message.add(msg);
 			}
 		} catch (Exception e) {

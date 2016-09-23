@@ -67,7 +67,7 @@ public class UsersDo {
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 			String datetime = sdf.format(time);
 			content.put("time", datetime);
-			content.put("from", myName);
+			content.put("from", from);
 			content.put("to", to);
 			content.put("noHtml", nohtml);
 			json.put("content", content);
