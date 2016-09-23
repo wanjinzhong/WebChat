@@ -80,10 +80,10 @@ function contentHandle(json) {
 	//将全部的\n换行修改成<br/>标签换行
 	var message = json.message.replace(/\n/g,"<br/>");
 	//如果消息类型是普通用户消息
-	if (msgtype == "normal") {
+	if (msgtype == "normal" || msgtype == "record") {
 		//如果是来自自己发送的消息
 		if(json.from == name){
-			var html = "<div class='messageDiv'><div class='fromMe'><span class='from'>我</span> (" +
+			var html = "<div class='messageDiv'><div class='fromMe'><span class='from'>我<span class='toMe'> 对" + json.to + "说</span></span> (" +
 			json.time + ") <div>" + "<div class='msgfromMe'><span class='messageContent'>" + message +
 			"<span></div></div>";
 		}
@@ -92,16 +92,20 @@ function contentHandle(json) {
 			var html = "<div class='messageDiv'<span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a><span class='toMe'> 对我说</span></span> (" +
 			json.time + ") <br/>" + "<div class='getMessage'><span class='messageContent'>" + message +
 			"</span></div></div>";
-			document.getElementById("msgAudio").src="audio/saytome.mp3";
-			document.getElementById("msgAudio").play();
+			if(msgtype != "record"){
+				document.getElementById("msgAudio").src="audio/saytome.mp3";
+				document.getElementById("msgAudio").play();
+			}
 		}
 		//如果来自别人发送的消息，且不是单聊
 		else{
 			var html = "<div class='messageDiv'><span class='from'><a href='javascript:void(0);' onclick='atSomeOne(this)'>" + json.from + "</a></span> (" +
 			json.time + ") <br/>" + "<div class='getMessage'><span class='messageContent'>" + message +
 			"</span></span></div>";
-			document.getElementById("msgAudio").src="audio/messagein.mp3";
-			document.getElementById("msgAudio").play();
+			if(msgtype != "record"){
+				document.getElementById("msgAudio").src="audio/messagein.mp3";
+				document.getElementById("msgAudio").play();
+			}
 		}
 	}else if(msgtype == "system"){
 		if (json.from == name){

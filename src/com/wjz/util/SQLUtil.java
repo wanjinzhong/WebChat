@@ -43,8 +43,9 @@ public class SQLUtil {
 		connect();
 		try {
 			String sql = "insert into messages values(?,?,?,?)";
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps;
 			for (Message msg : messages) {
+				ps = conn.prepareStatement(sql);
 				ps.setString(1, msg.getFrom());
 				ps.setString(2, msg.getTo());
 				ps.setString(3, msg.getMessage());
@@ -67,7 +68,7 @@ public class SQLUtil {
 		List<Message> message = new ArrayList<Message>();
 		connect();
 		try {
-			String sql = "select * from messages where from=? or to=?";
+			String sql = "select * from messages where `from`=? or `to`=?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, userName);
 			ps.setString(2, userName);

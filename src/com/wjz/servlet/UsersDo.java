@@ -26,10 +26,13 @@ import com.wjz.util.SensitiveWord;
 
 @ServerEndpoint(value = "/UsersDo/{userName}")
 public class UsersDo {
+	private Session session = null;
 	private String myName = null;
 	private List<Message> messages = new ArrayList<Message>();
+	private List<Message> msgRecord = null;
 	public static final String NORMAL = "normal";
 	public static final String SYSTEM = "system";
+	public static final String RECORD = "record";
 	/**
 	 * WebSocket连接
 	 * @param userName 用户名
@@ -38,13 +41,43 @@ public class UsersDo {
 	 */
 	@OnOpen
 	public void open(@PathParam("userName") String userName, Session session, EndpointConfig config) {
-
+		this.session = session;
 		myName = userName;
 		Users.userMap.put(userName, session);
+		// 广播用户列表
 		broadCastName();
+		// 通知上线
 		prepareMessage(UsersDo.SYSTEM, "所有人", false, myName + "上线啦！");
+		sendMsgRecord();
 	}
-	
+	public void sendMsgRecord(){
+		// 获取消息记录
+		msgRecord = SQLUtil.readMessageAboutMe(myName);
+		for (Message msg : msgRecord){
+			String to = msg.getTo();
+			String from = msg.getFrom();
+			String msgContent = msg.getMessage();
+			Date time = msg.getTime();
+			String nohtml = msg.getNoHtml();
+			JSONObject json = new JSONObject();
+			json.put("type", "content");
+			JSONObject content = new JSONObject();
+			content.put("message", msgContent);
+			content.put("msgtype", UsersDo.RECORD);
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			String datetime = sdf.format(time);
+			content.put("time", datetime);
+			content.put("from", myName);
+			content.put("to", to);
+			content.put("noHtml", nohtml);
+			json.put("content", content);
+			try {
+				session.getBasicRemote().sendText(json.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	/**
 	 * 收到用户发来和消息
 	 * @param session 该用户的一个会话
@@ -170,8 +203,8 @@ public class UsersDo {
 	/**
 	 * 发送消息到单个用户（单播）
 	 * 
-	 * @param json
-	 * @param to
+	 * @param json	消息
+	 * @param to	要发送到的用户
 	 */
 	public void sendMessageToOne(JSONObject json, String to) {
 		Session toSession = Users.userMap.get(to);
@@ -184,6 +217,5 @@ public class UsersDo {
 			e.printStackTrace();
 		}
 	}
-	
 	
 }

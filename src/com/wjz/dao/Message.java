@@ -7,6 +7,13 @@ public class Message {
 	private String to;
 	private String message;
 	private Date time;
+	private String noHtml;
+	public String getNoHtml() {
+		return noHtml;
+	}
+	public void setNoHtml(String noHtml) {
+		this.noHtml = noHtml;
+	}
 	public Date getTime() {
 		return time;
 	}
