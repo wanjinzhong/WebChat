@@ -41,8 +41,10 @@
 				@ <input type="text" class="at" disabled="disabled" value="所有人">
 			</div>
 			<div class="operate">
-				<input type="checkbox" name="noHtml" class="noHtml" />屏蔽HTML代码 <a
-					href="javascript:void(0);" onclick="emojiDiv()">表情</a>
+				<input type="checkbox" name="noHtml" class="noHtml" />屏蔽HTML代码 
+				<a href="javascript:void(0);" onclick="emojiDiv()">表情</a>
+				<a href="javascript:void(0);" onclick="backimgDiv()">背景</a>
+				<a href="javascript:void(0);" onclick="clearScreen()">清屏</a>
 			</div>
 			<div class="inputDiv">
 				<div rows="5" cols="10" class="message" id="message" onclick="inputClick()" contenteditable="true"></div>
@@ -51,11 +53,20 @@
 		</div>
 
 	</div>
-	<div class="emoj" style="display: none;">
+	<div class="emoji" style="display: none;">
 		<c:forEach begin="1" end="132" varStatus="index">
 			<img alt="${index.count }" src="expression/${index.count }.gif"
 				onclick="chooseExp('${index.count }')"  class="emojiPic"/>
 			<c:if test="${index.count % 20 == 0 }">
+				<br />
+			</c:if>
+		</c:forEach>
+	</div>
+	<div class="backgourd" style="display: none;">
+		<c:forEach begin="1" end="9" varStatus="index">
+			<img alt="${index.count }" src="backimg/${index.count }_index.jpg"
+				onclick="setBackImg(${index.count })" class="back">
+			<c:if test="${index.count % 3 == 0 }">
 				<br />
 			</c:if>
 		</c:forEach>
@@ -68,6 +79,7 @@
 	var emojiDisplayed = false;
 	start();
 	resize();
+	setBackImg(1);
 	/**
 	 * 窗口大小改变事件，页面自适应
 	 */

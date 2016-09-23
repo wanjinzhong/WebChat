@@ -93,9 +93,8 @@ body {
 	word-wrap: break-word;
 }
 
-.emoj {
+.emoji {
 	position: absolute;
-	width: 600px;
 	height: 220px;
 	left: 10px;
 	bottom: 160px;
@@ -105,7 +104,17 @@ body {
 	border-bottom-color: #4f9ecd;
 	border-right-color: #4f9ecd;
 }
-
+.backgourd{
+	position: absolute;
+	left: 50px;
+	padding:5px;
+	bottom: 160px;
+	background-color: #d6f7ff;
+	border-radius: 8px;
+	border: solid 2px #b0e2ff;
+	border-bottom-color: #4f9ecd;
+	border-right-color: #4f9ecd;
+}
 .sendBtn {
 	position: absolute;
 	width: 50px;
@@ -157,7 +166,7 @@ ul {
 }
 
 .content {
-	margin-left: 10px;
+	padding-left: 10px;
 	overflow: scroll;
 }
 
