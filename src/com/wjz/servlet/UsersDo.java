@@ -2,10 +2,10 @@ package com.wjz.servlet;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
@@ -18,13 +18,16 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.json.JSONObject;
 
+import com.wjz.dao.Message;
 import com.wjz.dao.Users;
 import com.wjz.util.MessageUtil;
+import com.wjz.util.SQLUtil;
 import com.wjz.util.SensitiveWord;
 
 @ServerEndpoint(value = "/UsersDo/{userName}")
 public class UsersDo {
 	private String myName = null;
+	private List<Message> messages = new ArrayList<Message>();
 	public static final String NORMAL = "normal";
 	public static final String SYSTEM = "system";
 	/**
@@ -62,6 +65,7 @@ public class UsersDo {
 	 */
 	@OnClose
 	public void onClose(Session session) {
+		SQLUtil.storeMessageFormMe(messages);
 		Users.userMap.remove(myName);
 		System.out.println("有人下线。。。");
 		broadCastName();
@@ -70,7 +74,7 @@ public class UsersDo {
 
 	@OnError
 	public void onError(Throwable t) {
-
+		SQLUtil.storeMessageFormMe(messages);
 	}
 
 	/**
@@ -127,6 +131,12 @@ public class UsersDo {
 		content.put("from", myName);
 		if (msgtype.equals(UsersDo.NORMAL)) {
 			content.put("to", to);
+			Message msg = new Message();
+			msg.setFrom(myName);
+			msg.setTo(to);
+			msg.setMessage(message);
+			msg.setTime(d);
+			messages.add(msg);
 		} else if (msgtype.equals(UsersDo.SYSTEM)) {
 			content.put("number", Users.userMap.size());
 		}
@@ -174,6 +184,6 @@ public class UsersDo {
 			e.printStackTrace();
 		}
 	}
-
+	
 	
 }
