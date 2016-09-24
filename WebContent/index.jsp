@@ -8,12 +8,13 @@
 <title>Web聊天室</title>
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 <link rel="stylesheet" type="text/css" href="styles/index.css" />
+<link rel="SHOTCUT ICON" href="pic/favicon.ico">
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
 </head>
 <body>
-	<!-- 宽：1024px，高：768px -->
 	<div class="header">
+	<img src="pic/dabai.png" id="logo"><span class="title">WEB聊天室</span>
 		<span class="dispName">我是${userName }</span>
 	</div>
 	<div class="container" id="container">
@@ -47,7 +48,7 @@
 				<a href="javascript:void(0);" onclick="clearScreen()">清屏</a>
 			</div>
 			<div class="inputDiv">
-				<div rows="5" cols="10" class="message" id="message" onclick="inputClick()" contenteditable="true"></div>
+				<div class="message" id="message" onclick="inputClick()" contenteditable="true"></div>
 			</div>
 			<input type="button" class="sendBtn" value="发送" onclick="send()">
 		</div>

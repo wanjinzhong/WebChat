@@ -143,6 +143,7 @@ function contentHandle(json) {
  * 发送消息
  */
 function send() {
+	inputClick()
 	var message = $("#message").html();
 	if (message == "")
 		return;
@@ -223,5 +224,5 @@ function setBackImg(index) {
 	$(".chatroom").css("background-image", "url('backimg/" + index + ".jpg')");
 	$(".friendList")
 			.css("background-image", "url('backimg/" + index + ".jpg')");
-
+	$(".backgourd").css("display", "none");
 }

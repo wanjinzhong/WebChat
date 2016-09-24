@@ -10,8 +10,8 @@ body {
 .background {
 	
 	position: absolute;
-	width: 327px;
-	height: 327px;
+	width: 400px;
+	height: 250px;
 	left: 0;
 	right: 0;
 	top: 0;
@@ -21,7 +21,20 @@ body {
 }
 
 #loginTable {
-	width: 100%;
-	height: 300px;	
+	width: 80%;
+	height: 200px;	
 	background-repeat: no-repeat;
+}
+
+#login, #reset{
+	width:80px;
+	height:30px;
+}
+
+#userName{
+	width: 100%;
+}
+
+#title{
+	font-size: 30px;
 }

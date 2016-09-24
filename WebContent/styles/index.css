@@ -17,6 +17,18 @@ body {
 	width: 100%;
 }
 
+#logo{
+	height:100px;
+	margin-left: 20px;
+}
+
+.title{
+	position: absolute;
+	font-size: 30px;
+	top: 35px;
+	left: 100px;
+}
+
 .footer {
 	position: fixed;
 	left: 0;
