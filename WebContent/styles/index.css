@@ -155,10 +155,28 @@ body {
 	width: 100%;
 }
 
-.me {
+#me {
 	margin-top: 5px;
 }
-
+.userList{
+	width: 98%;
+}
+.userList li{
+	margin-top: 1px;
+	border-radius: 8px;
+	border:solid 1px #729fcf;
+}
+a{
+	text-decoration: none;
+}
+.userList li:HOVER{
+	background-color: #d6f7ff;
+}
+.user{
+	display: block;
+	width: 100%;
+	height: 100%;
+}
 ul {
 	display: block;
 	list-style: none;
@@ -168,9 +186,9 @@ ul {
 
 .list {
 	position: absolute;
-	overflow: scroll;
-	width: 98%;
-	height: 100%;
+	overflow-y: scroll;
+	left: 10px;
+	width: 95%;
 	bottom: 10px;
 }
 
@@ -182,7 +200,7 @@ ul {
 
 .content {
 	padding-left: 10px;
-	overflow: scroll;
+	overflow-y: scroll;
 }
 
 .getMessage {

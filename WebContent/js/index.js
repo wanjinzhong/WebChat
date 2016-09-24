@@ -61,7 +61,7 @@ function nameHandle(jsonString) {
 	for ( var i in names) {
 		if (names[i] != name) {
 			var html = $("#friendListUl").html();
-			var newhtml = "<li><a href='javascript:void(0);' onclick='atSomeOne(this)'>"
+			var newhtml = "<li><a href='javascript:void(0);' onclick='atSomeOne(this)' class='user'>"
 					+ names[i] + "</a></li>"
 			$("#friendListUl").html(html + newhtml);
 		}

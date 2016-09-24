@@ -24,11 +24,11 @@
 				<div class="numOfFriend">总共</div>
 			</div>
 			<div class="list" id="list">
-				<ul class="me">
-					<li><a href='javascript:void(0);' onclick='atSomeOne(this)'>所有人</a></li>
+				<ul class="userList" id="me">
+					<li><a href='javascript:void(0);' onclick='atSomeOne(this)' class='user'>所有人</a></li>
 					<li>我</li>
 				</ul>
-				<ul id="friendListUl">
+				<ul class="userList" id="friendListUl">
 				</ul>
 			</div>
 		</div>
@@ -92,7 +92,7 @@
 		var containerWidth = document.getElementById("container").offsetWidth;
 		console.log(containerHeight);
 		if (containerHeight - 50 > 0) {
-			document.getElementById("list").style.height = containerHeight - 60
+			document.getElementById("list").style.height = containerHeight - 70
 					+ "px";
 			document.getElementById("chatroom").style.height = containerHeight
 					- 40 + "px";
