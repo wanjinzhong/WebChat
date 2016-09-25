@@ -152,6 +152,7 @@ public class UsersDo {
 		}
 		message = SensitiveWord.formatWord(message);
 		message = MessageUtil.formatFace(message);
+		message = MessageUtil.formatJS(message);
 		JSONObject json = new JSONObject();
 		json.put("type", "content");
 		JSONObject content = new JSONObject();

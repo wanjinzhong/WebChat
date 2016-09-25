@@ -15,6 +15,21 @@ public class MessageUtil {
 		content = content.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">");
 		return content;
 	}
+	
+	public static String formatJS(String content){
+		content = content.replace("<script", "&lt;script")
+				.replace("</script", "&lt;/script")
+				.replace("onclick=", "onclick")
+				.replace("onblur=", "onblur")
+				.replace("onchange=", "onchange")
+				.replace("ondbclick=", "ondbclick")
+				.replace("onfocus=", "onfocus")
+				.replace("oninput=", "oninput")
+				.replace("ondrag", "ondrag ")
+				.replace("onkey", "onkey")
+				.replace("onmouse", "onmouse ");
+		return content;
+	}
 
 	/**
 	 * 解析表情
