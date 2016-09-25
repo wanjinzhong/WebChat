@@ -50,7 +50,7 @@
 				@ <input type="text" class="at" disabled="disabled" value="所有人">
 			</div>
 			<div class="operate">
-				<input type="checkbox" name="noHtml" class="noHtml" />屏蔽HTML代码 
+				<input type="checkbox" name="noHtml" class="noHtml" checked="checked"/>屏蔽HTML代码 
 				<a href="javascript:void(0);" onclick="emojiDiv()">表情</a>
 				<a href="javascript:void(0);" onclick="backimgDiv()">背景</a>
 				<a href="javascript:void(0);" onclick="clearScreen()">清屏</a>
