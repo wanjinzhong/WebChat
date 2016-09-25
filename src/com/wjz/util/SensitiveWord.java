@@ -1,9 +1,11 @@
 package com.wjz.util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class SensitiveWord {
 	public static String[] word;
@@ -16,14 +18,16 @@ public class SensitiveWord {
 	private static void readWord(){
 		String content = "";
 		try {
-			File file = new File("word.txt");
+			File file = new File("/word.txt");
 			System.out.println(file.getAbsolutePath());
-			FileInputStream in = new FileInputStream(file);
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(new FileInputStream(file),"utf-8"));
+
 			byte[] b = new byte[1024];
 			
-			int length = 0;
-			while ((length = in.read(b)) != -1){
-				content += new String(b, 0, length);
+			String str = "";
+			while ((str = in.readLine()) != null){
+				content += str;
 			}
 			word = content.split(";");
 
@@ -44,6 +48,7 @@ public class SensitiveWord {
 	public String[] getWords(){
 		if(word == null)
 			readWord();
+		
 		return word;
 	}
 	/**
@@ -65,6 +70,7 @@ public class SensitiveWord {
 		System.out.println("word: " + (word == null));
 		if (word == null)
 			readWord();
+	
 		for(String s : word){
 			if(content.indexOf(s) != -1){
 				String replace = "";
@@ -76,8 +82,5 @@ public class SensitiveWord {
 		}
 		System.out.println(content);
 		return content;
-	}
-	public static void main(String[] args) {
-		System.out.println(formatWord("丰进上承载要干枯我干一枯干夺帽子末夺"));
 	}
 }
