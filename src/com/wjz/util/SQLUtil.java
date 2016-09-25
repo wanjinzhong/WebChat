@@ -70,7 +70,7 @@ public class SQLUtil {
 		List<Message> message = new ArrayList<Message>();
 		connect();
 		try {
-			String sql = "select * from messages where `from`=? or `to`=? or `to`='所有人' order by `time`";
+			String sql = "select * from messages where `from`=? or `to`=? or `to`='所有人' order by `time` limit 0, 50";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, userName);
 			ps.setString(2, userName);
@@ -87,5 +87,77 @@ public class SQLUtil {
 			e.printStackTrace();
 		}
 		return message;
+	}
+	/**
+	 * 检查用户名是否存在
+	 * @param userName 用户名
+	 * @return true 存在，false 不存在
+	 */
+	public static boolean userIsExist(String userName){
+		connect();
+		try{
+			String sql = "select * from users where user_name=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, userName);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				return true;
+			}else{
+				return false;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	/**
+	 * 注册用户
+	 * @param userName 用户名
+	 * @param pwd 密码
+	 * @return true 注册成功，false 注册失败
+	 */
+	public static boolean regist(String userName, String pwd){
+		connect();
+		try{
+			String sql = "insert into users(`user_name`, `password`) values(?,?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, userName);
+			ps.setString(2, pwd);
+			int temp = ps.executeUpdate();
+			System.out.println(temp);
+			if (temp > 0){
+				return true;
+			}else{
+				return false;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	/**
+	 * 用户登陆
+	 * @param userName 用户名
+	 * @param pwd 密码
+	 * @return true 登陆成功， false 登陆失败
+	 */
+	public static boolean login(String userName,String pwd){
+		connect();
+		try{
+			String sql = "select * from users where user_name=? and password=?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, userName);
+			ps.setString(2, pwd);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				return true;
+			}else{
+				return false;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

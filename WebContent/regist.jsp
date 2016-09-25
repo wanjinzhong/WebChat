@@ -12,10 +12,10 @@
 
 <body>
 	<div class="background" align="center">
-		<form action="LoginServlet" method="post">
+		<form action="RegistServlet" method="post">
 			<table align="center" id="loginTable">
 				<tr>
-					<td colspan="2" align="center" id="title">Web聊天室-登陆</td>
+					<td colspan="2" align="center" id="title">Web聊天室-注册</td>
 				</tr>
 				<tr>
 					<td>用户名：</td>
@@ -25,11 +25,16 @@
 				<tr>
 					<td>密码：</td>
 					<td><input type="password" id="pwd"
-						name="pwd" style="width:200px"></td>
+						name="pwd"  style="width:200px"></td>
 				</tr>
 				<tr>
-					<td><a href="regist.jsp" style="text-decoration: none;">没有帐号？</a></td>
-					<td align="right"><input type="submit" value="登陆" id="login"/><input type="reset" value="重置" id="reset"></td>
+					<td>重复密码：</td>
+					<td><input type="password" id="repwd"
+						name="repwd"   style="width:200px"></td>
+				</tr>
+				<tr>
+					<td><a href="login.jsp" style="text-decoration: none;">已有帐号?</a></td>
+					<td align="right"><input type="submit" value="注册" id="login"/><input type="reset" value="重置" id="reset"></td>
 				</tr>
 			</table>
 		</form>

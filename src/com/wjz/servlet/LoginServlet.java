@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wjz.dao.Users;
+import com.wjz.util.SQLUtil;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -20,7 +21,8 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		String userName = request.getParameter("userNameIn");
+		String userName = request.getParameter("userName");
+		String pwd = request.getParameter("pwd");
 		if (userName == null || userName.trim().equals("")) {
 			out.print("<script type='text/javascript'>alert('请输入用户名');window.location = 'login.jsp';</script>");
 			return;
@@ -29,8 +31,12 @@ public class LoginServlet extends HttpServlet {
 			out.print("<script type='text/javascript'>alert('不能取名字为“所有人”');window.location = 'login.jsp';</script>");
 			return;
 		}
-		if (userName.indexOf('@') != -1) {
-			out.print("<script type='text/javascript'>alert('不能包含非法字符“@”');window.location = 'login.jsp';</script>");
+		if (!SQLUtil.userIsExist(userName)){
+			out.print("<script type='text/javascript'>alert('用户名不存在');window.location = 'login.jsp';</script>");
+			return;
+		}
+		if (!SQLUtil.login(userName, pwd)){
+			out.print("<script type='text/javascript'>alert('用户名或密码不正确');window.location = 'login.jsp';</script>");
 			return;
 		}
 		if (!Users.userMap.containsKey(userName)) {

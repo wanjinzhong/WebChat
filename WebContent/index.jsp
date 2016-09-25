@@ -12,6 +12,13 @@
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/jquery.js"></script>
 </head>
+<%
+	Object user = request.getSession().getAttribute("userName");
+	if (user == null){
+		response.sendRedirect("login.jsp");
+		return;
+	}
+%>
 <body>
 	<div class="header">
 	<img src="pic/dabai.png" id="logo"><span class="title">WEB聊天室</span>
