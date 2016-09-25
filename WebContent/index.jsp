@@ -22,6 +22,7 @@
 <body>
 	<div class="header">
 	<img src="pic/dabai.png" id="logo"><span class="title">WEB聊天室</span>
+	<a href="login.jsp" class="logout">退出登陆</a>
 		<span class="dispName">我是${userName }</span>
 	</div>
 	<div class="container" id="container">

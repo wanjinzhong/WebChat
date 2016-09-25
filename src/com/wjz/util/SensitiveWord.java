@@ -22,8 +22,6 @@ public class SensitiveWord {
 			System.out.println(file.getAbsolutePath());
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(new FileInputStream(file),"utf-8"));
-
-			byte[] b = new byte[1024];
 			
 			String str = "";
 			while ((str = in.readLine()) != null){
